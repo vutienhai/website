@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genshin Impact - Chi Tiết Game - MyVerse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light gray background */
+            color: #374151; /* Slightly softer dark text color */
+        }
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.75rem;
+            color: #1e4ed8; /* Blue color for logo */
+            transition: color 0.3s ease;
+        }
+        .brand-logo:hover {
+            color: #1e3a8a; /* Darker blue on hover */
+        }
+        /* Styling for game detail content */
+        .game-content h2 {
+            font-size: 1.75rem; /* Larger heading for sections */
+            font-weight: 700;
+            margin-top: 2.5rem; /* More space above section titles */
+            margin-bottom: 1.25rem;
+            color: #111827; /* Darker heading color */
+            border-bottom: 2px solid #e5e7eb; /* Underline for section titles */
+            padding-bottom: 0.5rem;
+        }
+        .game-content h3 {
+            font-size: 1.25rem; /* Sub-headings */
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #1f2937;
+        }
+        .game-content p {
+            line-height: 1.75;
+            margin-bottom: 1.25rem;
+        }
+        .game-content ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .game-content li {
+            margin-bottom: 0.75rem; /* More space between list items */
+        }
+        .game-content a {
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        .game-content a:hover {
+            color: #1d4ed8;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .featured-image-game {
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem; /* Adjusted margin */
+            box-shadow: 0 6px 10px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+        }
+        .game-meta span {
+            display: inline-block;
+            background-color: #e0e7ff; /* Light indigo background */
+            color: #3730a3; /* Indigo text */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px; /* Pill shape */
+            font-size: 0.875rem; /* Smaller font size */
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .shiny-button { /* Reusing shiny button style from main page */
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 1;
+            border: none;
+            display: inline-block; /* Make it inline block */
+        }
+        .shiny-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        .shiny-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 80%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+        .shiny-button:hover::before {
+            left: 150%;
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="doan.html" class="brand-logo">MyVerse</a>
+            <div class="flex space-x-4 items-center">
+                <a href="doan.html#games" class="text-gray-700 hover:text-blue-600 transition duration-300">Trò chơi</a>
+                <a href="tin-tuc.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Tin tức</a>
+                <a href="doan.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Trang chủ</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-16">
+        <div class="max-w-5xl mx-auto">
+            <nav class="text-sm text-gray-500 mb-6 breadcrumb">
+                <a href="doan.html" class="hover:text-gray-700">Trang chủ</a>
+                <span class="mx-2">/</span>
+                <a href="doan.html#games" class="hover:text-gray-700">Trò chơi</a>
+                <span class="mx-2">/</span>
+                <span class="text-gray-700">Genshin Impact</span>
+            </nav>
+
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4 leading-tight">Genshin Impact</h1>
+                <div class="game-meta mb-6">
+                    <span>Nhập vai (RPG)</span>
+                    <span>Hành động</span>
+                    <span>Thế giới mở</span>
+                    <span>Gacha</span>
+                    <span>Anime</span>
+                </div>
+                <p class="text-gray-600 text-lg">
+                    Phát triển bởi: <span class="font-medium text-gray-800">miHoYo (HoYoverse)</span> | Ngày phát hành: <time datetime="2020-09-28">28/09/2020</time>
+                </p>
+            </div>
+
+            <div class="mb-10">
+                <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/9/9a/Genshin_Impact_Key_Art.png/800px-Genshin_Impact_Key_Art.png"
+                     onerror="this.onerror=null;this.src='./images/genshin.jpg';"
+                     alt="Ảnh đại diện game Genshin Impact" class="w-full featured-image-game">
+                 </div>
+
+            <div class="game-content text-lg">
+                <p class="text-xl text-gray-700 mb-8 italic">Chào mừng đến với Teyvat, một lục địa kỳ ảo nơi vô số sinh vật sinh sôi và phát triển. Tại đây, bảy vị Thần ngự trị bảy nguyên tố, và mọi người đều có thể trở thành Thần.</p>
+
+                <h2>Cốt Truyện Hấp Dẫn</h2>
+                <p>Bạn và người anh/em của mình đến từ thế giới khác. Khi đặt chân đến Teyvat, một vị Thần lạ mặt đã chặn đường, chia cắt hai người và khiến bạn rơi vào giấc ngủ sâu. Khi tỉnh lại, thế giới đã không còn như xưa.</p>
+                <p>Bạn, trong vai Nhà Lữ Hành, bắt đầu cuộc phiêu lưu tại Teyvat để tìm kiếm người thân thất lạc và khám phá những bí ẩn của thế giới này. Đồng hành cùng Paimon, một tinh linh dẫn đường tốt bụng, bạn sẽ chu du qua các quốc gia xinh đẹp, gặp gỡ những người bạn đồng hành với tính cách và năng lực đa dạng, cùng nhau chiến đấu chống lại kẻ địch hùng mạnh và vén màn sự thật bị che giấu.</p>
+
+                <h2>Lối Chơi Hành Động Thế Giới Mở</h2>
+                <h3>Khám Phá Lục Địa Teyvat</h3>
+                <p>Teyvat là một thế giới mở rộng lớn và đầy sức sống. Bạn có thể tự do leo trèo, bơi lội, bay lượn để khám phá mọi cảnh quan hùng vĩ, từ thành Mondstadt tự do đến cảng Liyue phồn hoa, từ lãnh địa Inazuma bí ẩn đến rừng mưa Sumeru uyên bác. Mỗi khu vực đều có nền văn hóa, câu chuyện và bí mật riêng đang chờ bạn khám phá.</p>
+                <h3>Hệ Thống Chiến Đấu Nguyên Tố</h3>
+                <p>Điểm cốt lõi của Genshin Impact là hệ thống chiến đấu dựa trên bảy Nguyên Tố: Phong, Nham, Lôi, Thảo, Thủy, Hỏa, Băng. Mỗi nhân vật sở hữu một Vision (con mắt của Thần) ứng với một nguyên tố và có bộ kỹ năng riêng biệt.</p>
+                <ul>
+                    <li>Kết hợp các nguyên tố để tạo ra Phản Ứng Nguyên Tố mạnh mẽ (ví dụ: Thủy + Lôi = Điện Cảm, Hỏa + Thảo = Thiêu Đốt).</li>
+                    <li>Xây dựng đội hình gồm 4 nhân vật và linh hoạt chuyển đổi giữa họ trong chiến đấu.</li>
+                    <li>Tận dụng địa hình và môi trường để tạo lợi thế chiến thuật.</li>
+                </ul>
+                <h3>Thu Thập và Phát Triển Nhân Vật</h3>
+                <p>Genshin Impact có hệ thống nhân vật đa dạng và phong phú, được thu thập chủ yếu qua hệ thống "Cầu Nguyện" (Gacha). Mỗi nhân vật có cốt truyện, thiết kế và vai trò riêng trong đội hình. Bạn có thể nâng cấp nhân vật, vũ khí, Thánh Di Vật và Thiên Phú để gia tăng sức mạnh.</p>
+
+                <h2>Tính Năng Nổi Bật</h2>
+                <ul>
+                    <li>Thế giới mở Teyvat rộng lớn, tuyệt đẹp với đồ họa phong cách anime.</li>
+                    <li>Hệ thống chiến đấu hành động thời gian thực kết hợp phản ứng nguyên tố độc đáo.</li>
+                    <li>Dàn nhân vật đa dạng với thiết kế và cốt truyện riêng biệt.</li>
+                    <li>Cốt truyện chính hấp dẫn và liên tục được cập nhật.</li>
+                    <li>Nhiều hoạt động phụ như nấu ăn, chế tạo, xây dựng trong Ấm Trần Ca.</li>
+                    <li>Chế độ chơi Co-op cho phép khám phá và chiến đấu cùng bạn bè.</li>
+                    <li>Cập nhật thường xuyên với các khu vực, nhân vật và sự kiện mới.</li>
+                </ul>
+
+                <h2>Yêu Cầu Hệ Thống</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-100 p-6 rounded-lg border border-gray-200">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2 text-gray-800">PC - Tối thiểu</h3>
+                        <ul class="list-none ml-0 text-base">
+                            <li><strong>Hệ điều hành:</strong> Windows 7 SP1 64-bit, Windows 8.1 64-bit, or Windows 10 64-bit</li>
+                            <li><strong>Bộ xử lý:</strong> Intel Core i5 hoặc tương đương</li>
+                            <li><strong>RAM:</strong> 8 GB</li>
+                            <li><strong>Card đồ họa:</strong> NVIDIA® GeForce® GT 1030 trở lên</li>
+                            <li><strong>DirectX:</strong> Version 11</li>
+                            <li><strong>Dung lượng trống:</strong> 40 GB</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2 text-gray-800">PC - Đề nghị</h3>
+                        <ul class="list-none ml-0 text-base">
+                            <li><strong>Hệ điều hành:</strong> Windows 7 SP1 64-bit, Windows 8.1 64-bit, or Windows 10 64-bit</li>
+                            <li><strong>Bộ xử lý:</strong> Intel Core i7 hoặc tương đương</li>
+                            <li><strong>RAM:</strong> 16 GB</li>
+                            <li><strong>Card đồ họa:</strong> NVIDIA® GeForce® GTX 1060 6GB trở lên</li>
+                            <li><strong>DirectX:</strong> Version 11</li>
+                            <li><strong>Dung lượng trống:</strong> 40 GB</li>
+                        </ul>
+                    </div>
+                    </div>
+
+                <div class="text-center mt-12">
+                    <a href="https://genshin.hoyoverse.com/vi/download" target="_blank" rel="noopener noreferrer" class="shiny-button bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:from-blue-600 hover:to-purple-700 shadow-xl">
+                        Tải Game Miễn Phí
+                    </a>
+                </div>
+
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-300">
+                <a href="doan.html#games" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition duration-300 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 transition-transform group-hover:-translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Xem các trò chơi khác
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center flex-wrap gap-x-6 gap-y-2 mb-4">
+                 <a href="#" class="hover:text-white transition duration-300 text-sm">Chính sách bảo mật</a>
+                 <a href="#" class="hover:text-white transition duration-300 text-sm">Điều khoản dịch vụ</a>
+                 <a href="#" class="hover:text-white transition duration-300 text-sm">Hỗ trợ</a>
+            </div>
+            <p class="text-sm">&copy; 2025 MyVerse. Mọi quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

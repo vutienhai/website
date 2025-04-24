@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Tài Khoản - MyVerse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Slightly different background for form pages */
+            color: #1f2937;
+        }
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.75rem;
+            color: #1e4ed8;
+            transition: color 0.3s ease;
+        }
+        .brand-logo:hover {
+            color: #1e3a8a;
+        }
+        .form-container {
+            max-width: 450px; /* Limit form width */
+            margin: 4rem auto; /* Center form vertically and horizontally */
+            padding: 2.5rem; /* Padding inside the form box */
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* Shadow */
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db; /* Gray border */
+            border-radius: 0.5rem; /* Rounded input fields */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none; /* Remove default outline */
+        }
+        .form-input:focus {
+            border-color: #2563eb; /* Blue border on focus */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); /* Blue ring on focus */
+        }
+        .submit-button {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background-color: #2563eb; /* Blue button */
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #1d4ed8; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="doan.html" class="brand-logo">MyVerse</a>
+            <div class="flex space-x-4 items-center">
+                <a href="doan.html#games" class="text-gray-700 hover:text-blue-600 transition duration-300">Trò chơi</a>
+                <a href="tin-tuc.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Tin tức</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition duration-300">Đăng nhập</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8">Tạo Tài Khoản MyVerse</h1>
+
+            <form action="#" method="POST"> <div class="mb-5">
+                    <label for="username" class="form-label">Tên đăng nhập</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="Nhập tên đăng nhập" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="email" class="form-label">Địa chỉ Email</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Nhập email của bạn" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Nhập mật khẩu" required>
+                </div>
+
+                <div class="mb-6">
+                    <label for="confirm_password" class="form-label">Xác nhận Mật khẩu</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-input" placeholder="Nhập lại mật khẩu" required>
+                    </div>
+
+                <div class="mb-6">
+                    <button type="submit" class="submit-button">Đăng ký</button>
+                </div>
+
+                <p class="text-center text-sm text-gray-600">
+                    Đã có tài khoản?
+                    <a href="#" class="font-medium text-blue-600 hover:text-blue-800 hover:underline">
+                        Đăng nhập tại đây
+                    </a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center flex-wrap gap-x-6 gap-y-2 mb-4">
+                 <a href="#" class="hover:text-white transition duration-300 text-sm">Chính sách bảo mật</a>
+                 <a href="#" class="hover:text-white transition duration-300 text-sm">Điều khoản dịch vụ</a>
+                 <a href="#" class="hover:text-white transition duration-300 text-sm">Hỗ trợ</a>
+            </div>
+            <p class="text-sm">&copy; 2025 MyVerse. Mọi quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Basic password confirmation check (can be enhanced)
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        const form = document.querySelector('form');
+
+        if (form && passwordInput && confirmPasswordInput) {
+            form.addEventListener('submit', (event) => {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    alert('Mật khẩu xác nhận không khớp!');
+                    event.preventDefault(); // Prevent form submission
+                    confirmPasswordInput.focus(); // Focus on the confirmation field
+                    // Optionally add visual feedback like changing border color
+                    confirmPasswordInput.classList.add('border-red-500'); // Example: Add red border
+                } else {
+                    // Remove error styling if previously added
+                    confirmPasswordInput.classList.remove('border-red-500');
+                }
+            });
+
+            // Remove error styling when user types in confirm field
+            confirmPasswordInput.addEventListener('input', () => {
+                 confirmPasswordInput.classList.remove('border-red-500');
+            });
+        }
+    </script>
+
+</body>
+</html>

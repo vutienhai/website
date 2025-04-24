@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyVerse - Khám Phá Thế Giới Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom CSS Rules */
+        html {
+             scroll-behavior: smooth; /* Cuộn trang mượt hơn khi nhấn link neo */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Màu nền xám nhạt */
+            color: #212529; /* Màu chữ tối */
+            overflow-x: hidden; /* Ngăn cuộn ngang */
+        }
+        /* --- Hero Section --- */
+        .hero-bg {
+            background-image: url('./images/thumb.jpg'); /* Đường dẫn ảnh nền */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #334155; /* Màu nền dự phòng nếu ảnh lỗi */
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7)); /* Lớp phủ gradient tối */
+            /* Thêm hiệu ứng nhẹ nhàng cho lớp phủ */
+            /* animation: subtlePulse 5s infinite alternate ease-in-out; */
+        }
+        /* Keyframe cho hiệu ứng lớp phủ (tùy chọn) */
+        /* @keyframes subtlePulse {
+            from { background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)); }
+            to { background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)); }
+        } */
+
+        /* --- Header & Navigation --- */
+        header nav a:not(.shiny-button) {
+             padding: 8px 16px;
+             border-radius: 8px;
+             font-weight: 500;
+             transition: background-color 0.3s ease-out, color 0.3s ease-out, transform 0.2s ease-out; /* Chuyển đổi mượt mà */
+             position: relative; /* Cho hiệu ứng gạch chân */
+             overflow: hidden;
+        }
+        header nav a:not(.shiny-button)::after { /* Hiệu ứng gạch chân chạy vào */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px; /* Gạch chân mỏng hơn */
+            background-color: #1e3a8a; /* Màu xanh đậm */
+            transition: left 0.3s ease-out;
+        }
+        header nav a:not(.shiny-button):hover {
+             background-color: #eef2ff; /* Màu nền nhạt khi hover */
+             color: #1e3a8a; /* Màu chữ đậm khi hover */
+             transform: translateY(-2px); /* Nhấc nhẹ lên */
+        }
+        header nav a:not(.shiny-button):hover::after {
+            left: 0; /* Chạy gạch chân vào khi hover */
+        }
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.75rem;
+            color: #1e4ed8; /* Màu xanh dương */
+            transition: color 0.3s ease-out, transform 0.3s ease-out; /* Thêm transition cho transform */
+        }
+        .brand-logo:hover {
+            color: #1e3a8a; /* Màu xanh đậm hơn khi hover */
+            transform: scale(1.05); /* Phóng to nhẹ logo */
+        }
+
+        /* --- Cards (Game, News, Featured) --- */
+        .interactive-card {
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Sử dụng cubic-bezier mượt hơn */
+            border-radius: 0.75rem; /* Bo góc */
+            overflow: hidden;
+            border: 1px solid #e5e7eb; /* Viền xám nhạt */
+            background-color: #ffffff; /* Nền trắng */
+        }
+        .interactive-card:hover {
+            transform: translateY(-10px) scale(1.02); /* Nhấc cao hơn và phóng to nhẹ */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2), 0 10px 20px -8px rgba(0, 0, 0, 0.15); /* Bóng đổ rõ hơn */
+        }
+        .interactive-card img {
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 0; /* Bỏ bo góc trên ảnh để ăn theo card */
+            width: 100%;
+            background-color: #e5e7eb; /* Màu nền placeholder */
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Hiệu ứng zoom ảnh mượt hơn */
+        }
+        .interactive-card:hover img {
+             transform: scale(1.1); /* Zoom ảnh nhiều hơn khi hover */
+        }
+        /* Thêm hiệu ứng cho nội dung text trong card khi hover */
+        .interactive-card .group:hover h3 {
+            color: #1d4ed8; /* Đổi màu tiêu đề khi hover */
+        }
+        .interactive-card .group:hover span[class*="group-hover:translate-x-1"] {
+            transform: translateX(4px); /* Mũi tên di chuyển xa hơn */
+        }
+
+        /* --- Community Card --- */
+        .community-card img {
+             border: 4px solid #e5e7eb; /* Viền ảnh avatar */
+             object-fit: cover;
+             border-radius: 9999px; /* Ảnh tròn */
+             width: 6rem; /* Kích thước ảnh */
+             height: 6rem;
+             flex-shrink: 0;
+             background-color: #e5e7eb; /* Màu nền placeholder */
+             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy nhẹ */
+        }
+        .community-card:hover img {
+             transform: scale(1.15) rotate(8deg); /* Phóng to và xoay nhiều hơn */
+        }
+
+        /* --- Section Title --- */
+        .section-title {
+             font-size: 2.25rem; /* Tăng kích thước font */
+             font-weight: 800; /* Đậm hơn */
+             text-align: center;
+             margin-bottom: 4rem; /* Tăng khoảng cách dưới */
+             color: #111827; /* Màu chữ tối */
+             /* Hiệu ứng xuất hiện */
+             opacity: 0;
+             transform: translateY(20px); /* Trượt lên từ dưới */
+             transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .section-title.is-visible { /* Khi xuất hiện */
+             opacity: 1;
+             transform: translateY(0);
+        }
+
+        /* --- Call to Action (CTA) Section --- */
+        .cta-bg {
+             background: linear-gradient(135deg, #4f46e5 0%, #a855f7 100%); /* Gradient tím-xanh */
+             border-radius: 1rem; /* Bo góc */
+             margin: 5rem auto; /* Tăng margin */
+             padding: 5rem 1.5rem; /* Tăng padding */
+             max-width: 1200px;
+             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .cta-bg:hover {
+            transform: scale(1.02); /* Phóng to nhẹ khi hover */
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4); /* Bóng đổ màu tím */
+        }
+
+        /* --- Tabs --- */
+        .tab-button {
+            padding: 0.8rem 1.75rem; /* Tăng padding */
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #4b5563; /* Màu chữ xám */
+            border-bottom: 4px solid transparent; /* Viền dưới trong suốt */
+            transition: color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+            margin-bottom: -2px; /* Để khớp với border */
+            cursor: pointer;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .tab-button::after { /* Hiệu ứng gạch chân chạy vào */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0; /* Bắt đầu từ trái */
+            width: 100%;
+            height: 4px;
+            background-color: #1d4ed8; /* Màu xanh đậm */
+            transform: scaleX(0); /* Bắt đầu ẩn */
+            transform-origin: left; /* Chạy từ trái sang */
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .tab-button:hover {
+            color: #1d4ed8; /* Đổi màu chữ khi hover */
+            transform: translateY(-3px); /* Nhấc nhẹ lên */
+        }
+        .tab-button.active {
+            color: #1d4ed8; /* Màu chữ active */
+            font-weight: 700; /* Đậm hơn */
+        }
+        .tab-button.active::after {
+            transform: scaleX(1); /* Hiển thị gạch chân khi active */
+        }
+        .tab-panel {
+            /* Hiệu ứng chuyển đổi giữa các tab */
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            opacity: 1;
+            transform: translateY(0); /* Bắt đầu từ vị trí bình thường */
+        }
+        .tab-panel.hidden {
+            opacity: 0;
+            transform: translateY(15px); /* Trượt xuống nhẹ khi ẩn */
+            position: absolute; /* Giữ nguyên để không ảnh hưởng layout */
+            top: 0;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        /* --- Animation Keyframes & Classes --- */
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(30px); } /* Tăng khoảng cách trượt lên */
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            opacity: 0; /* Bắt đầu ẩn */
+            /* Áp dụng animation khi class is-visible được thêm vào bởi JS */
+        }
+        .animate-fade-in-up.is-visible {
+             animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Tăng thời gian animation */
+        }
+        /* Điều chỉnh delay cho mượt hơn */
+        .animate-delay-100.is-visible { animation-delay: 0.1s; }
+        .animate-delay-200.is-visible { animation-delay: 0.2s; }
+        .animate-delay-300.is-visible { animation-delay: 0.3s; }
+        .animate-delay-400.is-visible { animation-delay: 0.4s; }
+        .animate-delay-500.is-visible { animation-delay: 0.5s; }
+
+        /* Hero Text Animation */
+        .hero-text-animate > * {
+            opacity: 0;
+            /* Sẽ được kích hoạt bởi JS hoặc giữ nguyên animation cũ nếu không dùng JS */
+            animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .hero-text-animate h1 { animation-delay: 0.3s; }
+        .hero-text-animate p { animation-delay: 0.5s; }
+        .hero-text-animate a { animation-delay: 0.7s; }
+
+        /* Shiny Button Effect */
+        .shiny-button {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease-out;
+            z-index: 1;
+            border: none;
+            display: inline-block; /* Đảm bảo nút hiển thị đúng */
+        }
+        .shiny-button:hover {
+            transform: translateY(-4px) scale(1.03); /* Nhấc cao hơn và phóng to hơn */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Bóng đổ đậm hơn */
+        }
+        .shiny-button::before {
+            content: '';
+            position: absolute;
+            top: -10%; /* Điều chỉnh vị trí để hiệu ứng đẹp hơn */
+            left: -150%;
+            width: 70%; /* Giảm chiều rộng */
+            height: 120%; /* Tăng chiều cao */
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent); /* Độ sáng bóng */
+            transform: skewX(-25deg);
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1); /* Tăng thời gian và thay đổi easing */
+            z-index: 1; /* Đảm bảo hiệu ứng nằm trên nền nút */
+        }
+        .shiny-button:hover::before {
+            left: 150%;
+        }
+        /* Đảm bảo text nút luôn nằm trên hiệu ứng bóng */
+        .shiny-button span, .shiny-button {
+             position: relative;
+             z-index: 2;
+        }
+
+        /* --- Intersection Observer Animation --- */
+        .observe-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(30px); /* Tăng khoảng cách trượt */
+        }
+        .observe-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Image Placeholder --- */
+        img[data-placeholder] {
+            background-color: #eee; /* Màu nền cho ảnh chưa tải */
+        }
+
+        /* --- Mobile Menu Transition --- */
+        #mobile-menu {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(-10px); /* Bắt đầu hơi dịch lên */
+            opacity: 0;
+            pointer-events: none; /* Không cho tương tác khi ẩn */
+        }
+        #mobile-menu:not(.hidden) {
+            transform: translateY(0); /* Về vị trí bình thường khi hiển thị */
+            opacity: 1;
+            pointer-events: auto; /* Cho phép tương tác khi hiển thị */
+        }
+
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="brand-logo">MyVerse</a>
+            <div class="hidden md:flex space-x-1 items-center"> <a href="#" class="text-gray-700">Trang chủ</a>
+                <a href="#games" class="text-gray-700">Trò chơi</a>
+                <a href="#tabs" class="text-gray-700">Thông tin</a>
+                <a href="dangky.html" class="text-gray-700">Đăng ký</a>
+                <a href="dangnhap.html" class="shiny-button bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 ml-4 text-base font-semibold">
+                    <span>Đăng nhập</span>
+                </a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none p-2">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+         <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200 absolute w-full shadow-lg">
+            <a href="#" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 transition duration-150">Trang chủ</a>
+            <a href="#games" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 transition duration-150">Trò chơi</a>
+            <a href="#tabs" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 transition duration-150">Thông tin</a>
+            <a href="dangky.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 transition duration-150">Đăng ký</a>
+            <a href="dangnhap.html" class="block px-6 py-4 text-center bg-blue-600 text-white hover:bg-blue-700 font-semibold m-4 rounded-md transition duration-150">Đăng nhập</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-bg min-h-[70vh] md:min-h-[85vh] flex items-center justify-center text-white text-center overflow-hidden">
+             <div class="hero-overlay"></div>
+             <div class="relative z-10 p-4 hero-text-animate">
+                 <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-5 leading-tight drop-shadow-lg">Bước vào Vũ Trụ MyVerse</h1>
+                 <p class="text-lg md:text-2xl mb-10 max-w-3xl mx-auto drop-shadow-md font-light">Nơi những cuộc phiêu lưu bất tận, những trận chiến hào hùng và cộng đồng sôi động đang chờ bạn khám phá.</p>
+                 <a href="#games" class="shiny-button bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:from-blue-600 hover:to-purple-700 shadow-xl">
+                    <span>Khám Phá Game Ngay</span>
+                 </a>
+             </div>
+        </section>
+
+        <section id="games" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title observe-animate">Trò chơi nổi bật</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="interactive-card game-card bg-white shadow-lg observe-animate"> <a href="trochoinoibat.html" target="_blank" class="block group">
+                            <img src="./images/genshin.jpg"
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Genshin+Impact';"
+                                 alt="Ảnh bìa game Genshin Impact" class="w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2 text-gray-900 transition duration-300">Genshin Impact</h3>
+                                <p class="text-gray-600 mb-4">Khám phá thế giới Teyvat rộng lớn, gặp gỡ bạn đồng hành và làm chủ sức mạnh nguyên tố.</p>
+                                <span class="text-blue-600 hover:text-blue-800 font-medium transition duration-300 inline-flex items-center">
+                                    Tìm hiểu thêm <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="interactive-card game-card bg-white shadow-lg observe-animate">
+                         <a href="#" target="_blank" class="block group">
+                             <img src="./images/honkai.jpg"
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Honkai:+Star+Rail';"
+                                 alt="Ảnh bìa game Honkai: Star Rail" class="w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2 text-gray-900 transition duration-300">Honkai: Star Rail</h3>
+                                <p class="text-gray-600 mb-4">Lên Đội Tàu Astral và bắt đầu hành trình khám phá các thế giới kỳ diệu trong vũ trụ.</p>
+                                <span class="text-blue-600 hover:text-blue-800 font-medium transition duration-300 inline-flex items-center">
+                                    Tìm hiểu thêm <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="interactive-card game-card bg-white shadow-lg observe-animate">
+                        <a href="#" target="_blank" class="block group">
+                            <img src="./images/zenless.jpg"
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Zenless+Zone+Zero';"
+                                 alt="Ảnh bìa game Zenless Zone Zero" class="w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2 text-gray-900 transition duration-300">Zenless Zone Zero</h3>
+                                <p class="text-gray-600 mb-4">Trở thành Proxy và dẫn dắt các đặc vụ khám phá Hollow trong đô thị hậu tận thế New Eridu.</p>
+                                <span class="text-blue-600 hover:text-blue-800 font-medium transition duration-300 inline-flex items-center">
+                                    Tìm hiểu thêm <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tabs" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="flex justify-center flex-wrap space-x-2 sm:space-x-4 md:space-x-6 mb-12 border-b border-gray-300 observe-animate"> <button class="tab-button active" data-tab="news">Tin tức</button>
+                    <button class="tab-button" data-tab="community">Cộng đồng</button>
+                    <button class="tab-button" data-tab="events">Sự kiện</button>
+                    <button class="tab-button" data-tab="featured">Nổi bật</button>
+                </div>
+
+                <div id="tab-panels" class="relative min-h-[450px]"> <div id="tab-news" class="tab-panel">
+                        <h2 class="section-title sr-only">Tin tức mới nhất</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                             <div class="interactive-card news-card bg-white shadow-md animate-fade-in-up"> <a href="tintuc.html" class="block group">
+                                    <img src="./images/genshin 4.7.jpg"
+                                         loading="lazy"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Genshin+4.7';"
+                                         alt="Ảnh minh họa phiên bản 4.7 Genshin Impact" class="w-full">
+                                    <div class="p-4">
+                                        <span class="text-sm text-gray-500">23/04/2025</span>
+                                        <h3 class="text-lg font-semibold my-2 text-gray-900 group-hover:text-blue-600 transition duration-300">Phiên Bản 4.7: Lễ Hội Mùa Hè Fontaine & Sự Trở Lại Của Kẻ Lang Thang</h3>
+                                        <p class="text-gray-600 text-sm line-clamp-2">Chi tiết về sự kiện mùa hè, banner nhân vật Kẻ Lang Thang và Kirara...</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="interactive-card news-card bg-white shadow-md animate-fade-in-up animate-delay-100">
+                                <a href="#" class="block group">
+                                    <img src="./images/natlan.jpg"
+                                         loading="lazy"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Natlan+Teaser';"
+                                         alt="Ảnh teaser nhân vật mới Genshin Impact từ Natlan" class="w-full">
+                                    <div class="p-4">
+                                        <span class="text-sm text-gray-500">22/04/2025</span>
+                                        <h3 class="text-lg font-semibold my-2 text-gray-900 group-hover:text-blue-600 transition duration-300">Nhân Vật Mới Sắp Ra Mắt: Hé Lộ Bí Ẩn Từ Natlan!</h3>
+                                        <p class="text-gray-600 text-sm line-clamp-2">Những hình ảnh đầu tiên về nhân vật 5 sao đến từ quốc gia chiến tranh...</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="interactive-card news-card bg-white shadow-md animate-fade-in-up animate-delay-200">
+                                <a href="#" class="block group">
+                                    <img src="./images/event.jpg"
+                                         loading="lazy"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Web+Event';"
+                                         alt="Ảnh sự kiện web Genshin Impact" class="w-full">
+                                    <div class="p-4">
+                                        <span class="text-sm text-gray-500">20/04/2025</span>
+                                        <h3 class="text-lg font-semibold my-2 text-gray-900 group-hover:text-blue-600 transition duration-300">Sự Kiện Web "Hành Trình Kỳ Diệu": Nhận Nguyên Thạch Miễn Phí!</h3>
+                                        <p class="text-gray-600 text-sm line-clamp-2">Tham gia sự kiện web đơn giản để rinh về những phần quà Nguyên Thạch giá trị...</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="interactive-card news-card bg-white shadow-md animate-fade-in-up animate-delay-300">
+                                 <a href="#" class="block group">
+                                     <img src="./images/genshin.jpg"  alt="Ảnh concert Genshin Impact" class="w-full" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Genshin+Concert';">
+                                    <div class="p-4">
+                                        <span class="text-sm text-gray-500">19/04/2025</span>
+                                        <h3 class="text-lg font-semibold my-2 text-gray-900 group-hover:text-blue-600 transition duration-300">Genshin Concert 2025: Thông Tin Vé và Lịch Trình Biểu Diễn</h3>
+                                        <p class="text-gray-600 text-sm line-clamp-2">Hòa mình vào những giai điệu bất hủ của Teyvat trong buổi hòa nhạc hoành tráng...</p>
+                                    </div>
+                                 </a>
+                            </div>
+                        </div>
+                        <div class="text-center mt-12 animate-fade-in-up animate-delay-400">
+                            <a href="tintuc.html" class="text-blue-600 hover:text-blue-800 font-medium transition duration-300 group inline-flex items-center">
+                                Xem tất cả tin tức <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="tab-community" class="tab-panel hidden">
+                        <h2 class="section-title sr-only">Tiêu điểm cộng đồng Genshin Impact</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                             <div class="interactive-card community-card bg-white rounded-lg p-6 shadow-md text-center animate-fade-in-up flex flex-col items-center">
+                                <img src="./images/fan art.jpg"
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/96x96/e2e8f0/94a3b8?text=Fan+Art';"
+                                     alt="Fan art nhân vật Furina Genshin Impact" class="mx-auto mb-4">
+                                <h3 class="text-xl font-semibold mb-2 text-purple-700">Fan Art Lung Linh</h3>
+                                <p class="text-gray-600 mb-4 grow">"Thủy Thần Furina qua nét vẽ đầy cảm xúc của @ArtistName. Quá xuất sắc!"</p>
+                                <a href="#" class="text-sm text-purple-600 hover:text-purple-800 font-medium mt-auto transition duration-300">Xem chi tiết</a>
+                            </div>
+                            <div class="interactive-card community-card bg-white rounded-lg p-6 shadow-md text-center animate-fade-in-up animate-delay-100 flex flex-col items-center">
+                                 <img src="./images/neuvill.jpg"
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/96x96/e2e8f0/94a3b8?text=Guide';"
+                                     alt="Hướng dẫn build nhân vật Neuvillette Genshin Impact" class="mx-auto mb-4">
+                                <h3 class="text-xl font-semibold mb-2 text-yellow-700">Hướng Dẫn Build Neuvillette</h3>
+                                <p class="text-gray-600 mb-4 grow">"Tuyển tập Thánh Di Vật và Vũ Khí tối ưu cho Quan Chánh Án Neuvillette từ @GenshinPro."</p>
+                                <a href="#" class="text-sm text-yellow-600 hover:text-yellow-800 font-medium mt-auto transition duration-300">Đọc hướng dẫn</a>
+                            </div>
+                            <div class="interactive-card community-card bg-white rounded-lg p-6 shadow-md text-center animate-fade-in-up animate-delay-200 flex flex-col items-center">
+                                <img src="./images/cosplay.jpg"
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/96x96/e2e8f0/94a3b8?text=Cosplay';"
+                                     alt="Cosplay nhân vật Raiden Shogun Genshin Impact" class="mx-auto mb-4">
+                                <h3 class="text-xl font-semibold mb-2 text-red-700">Cosplay Raiden Shogun</h3>
+                                <p class="text-gray-600 mb-4 grow">"Màn hóa thân Lôi Thần Ei đầy uy nghiêm và cuốn hút của cosplayer @CosplayStar."</p>
+                                <a href="#" class="text-sm text-red-600 hover:text-red-800 font-medium mt-auto transition duration-300">Xem ảnh</a>
+                            </div>
+                        </div>
+                         <div class="text-center mt-12 animate-fade-in-up animate-delay-300">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium transition duration-300 group inline-flex items-center">
+                                Tham gia cộng đồng <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="tab-events" class="tab-panel hidden">
+                        <h2 class="section-title sr-only">Sự kiện sắp tới</h2>
+                        <div class="bg-white rounded-lg shadow-xl p-8 md:p-12 border border-gray-200 animate-fade-in-up">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                                <div class="border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-8 animate-fade-in-up">
+                                    <h3 class="text-xl font-semibold text-blue-700 mb-2">Lễ Hội Mùa Hè Fontaine</h3>
+                                    <p class="text-gray-500 mb-3 text-sm">Bắt đầu: 01/06/2025</p>
+                                    <p class="text-gray-700">Tham gia mini-game, nhận trang phục miễn phí và khám phá cốt truyện mới.</p>
+                                </div>
+                                <div class="border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-8 pt-6 md:pt-0 animate-fade-in-up animate-delay-100">
+                                    <h3 class="text-xl font-semibold text-green-700 mb-2">La Hoàn Thâm Cảnh Mới</h3>
+                                    <p class="text-gray-500 mb-3 text-sm">Cập nhật: 16/05/2025</p>
+                                    <p class="text-gray-700">Thử thách đội hình quái vật mới và giành lấy Nguyên Thạch.</p>
+                                </div>
+                                <div class="pt-6 md:pt-0 animate-fade-in-up animate-delay-200">
+                                    <h3 class="text-xl font-semibold text-purple-700 mb-2">Sự Kiện Đồng Hành: [Tên NV]</h3>
+                                    <p class="text-gray-500 mb-3 text-sm">Dự kiến: Cuối tháng 6</p>
+                                    <p class="text-gray-700">Khám phá câu chuyện riêng của một nhân vật được yêu thích.</p>
+                                </div>
+                            </div>
+                            <div class="text-center mt-12 animate-fade-in-up animate-delay-300">
+                                <a href="#" class="shiny-button bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-700">
+                                    <span>Xem Lịch Sự Kiện Đầy Đủ</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-featured" class="tab-panel hidden">
+                         <h2 class="section-title sr-only">Nội dung nổi bật</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                            <div class="interactive-card featured-card rounded-lg overflow-hidden shadow-lg animate-fade-in-up">
+                                <img src="./images/wanderer.jpg"
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Wanderer';"
+                                     alt="Ảnh đại diện nhân vật Kẻ Lang Thang (Wanderer) Genshin Impact" class="w-full">
+                            </div>
+                            <div class="text-center md:text-left animate-fade-in-up animate-delay-100">
+                                <h3 class="text-2xl font-bold text-purple-800 mb-3">Nhân Vật Rerun: Kẻ Lang Thang</h3>
+                                <p class="text-lg text-gray-700 mb-4">"Sức mạnh hệ Phong linh hoạt, khả năng bay lượn độc đáo. Đừng bỏ lỡ cơ hội sở hữu Kẻ Lang Thang trong Phiên Bản 4.7!"</p>
+                                <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold transition duration-300 text-lg group inline-flex items-center">
+                                    Tìm hiểu về Kẻ Lang Thang <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                                </a>
+                            </div>
+                            <div class="interactive-card featured-card rounded-lg overflow-hidden shadow-lg mt-8 md:mt-0 animate-fade-in-up animate-delay-200 md:order-first">
+                                 <img src="./images/fontaine.jpg"
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/600x338/e2e8f0/94a3b8?text=Fontaine';"
+                                     alt="Ảnh phong cảnh Fontaine trong Genshin Impact" class="w-full">
+                            </div>
+                            <div class="text-center md:text-left md:order-last mt-8 md:mt-0 animate-fade-in-up animate-delay-300">
+                                <h3 class="text-2xl font-bold text-teal-800 mb-3">Khám Phá Fontaine</h3>
+                                <p class="text-lg text-gray-700 mb-4">"Quốc gia của Công Lý và Thủy Thần. Lặn sâu xuống biển, khám phá cơ chế Pneuma & Ousia và gặp gỡ những nhân vật thú vị."</p>
+                                <a href="#" class="text-teal-600 hover:text-teal-800 font-semibold transition duration-300 text-lg group inline-flex items-center">
+                                    Du Hành Tới Fontaine <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-bg text-white observe-animate">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-5">Sẵn sàng khám phá Teyvat?</h2>
+                <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto font-light text-indigo-100">Tải Genshin Impact miễn phí ngay hôm nay và bắt đầu hành trình của bạn!</p>
+                <a href="https://genshin.hoyoverse.com/vi/download" target="_blank" rel="noopener noreferrer" class="shiny-button bg-white text-indigo-700 px-12 py-4 rounded-full font-bold text-xl hover:bg-gray-100 shadow-xl">
+                    <span>Tải Game Miễn Phí</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center flex-wrap gap-x-6 gap-y-2 mb-6">
+                 <a href="#" class="hover:text-white transition duration-300">Chính sách bảo mật</a>
+                 <a href="#" class="hover:text-white transition duration-300">Điều khoản dịch vụ</a>
+                 <a href="#" class="hover:text-white transition duration-300">Về chúng tôi</a>
+                 <a href="#" class="hover:text-white transition duration-300">Hỗ trợ</a>
+             </div>
+            <p class="text-sm">&copy; 2025 MyVerse. Mọi quyền được bảo lưu.</p>
+            <p class="text-xs text-gray-500 mt-2">Trang web lấy cảm hứng từ HoYoverse. Chỉ dành cho mục đích demo.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Tab Functionality ---
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanelsContainer = document.getElementById('tab-panels');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            if (tabButtons.length > 0 && tabPanelsContainer && tabPanels.length > 0) {
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetTab = button.dataset.tab;
+                        const targetPanel = document.getElementById(`tab-${targetTab}`);
+
+                        // Deactivate all buttons and hide all panels first
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabPanels.forEach(panel => {
+                            panel.classList.add('hidden');
+                            panel.style.visibility = 'hidden';
+                            // Reset animations on hide
+                            panel.querySelectorAll('.animate-fade-in-up').forEach(el => el.classList.remove('is-visible'));
+                        });
+
+                        // Activate the clicked button
+                        button.classList.add('active');
+
+                        // Show the target panel
+                        if (targetPanel) {
+                            targetPanel.classList.remove('hidden');
+                            // Use a small timeout to allow CSS transitions to work correctly
+                            setTimeout(() => {
+                                targetPanel.style.visibility = 'visible';
+                                // Trigger animations for the newly visible panel elements
+                                targetPanel.querySelectorAll('.animate-fade-in-up').forEach((el, index) => {
+                                    // Add delay dynamically based on index for staggered effect
+                                    el.style.animationDelay = `${index * 0.1}s`; // Apply delay directly
+                                    el.classList.add('is-visible');
+                                });
+                            }, 10);
+                        }
+                    });
+                });
+
+                // Initialize the first active tab on load
+                 const firstActiveButton = document.querySelector('.tab-button.active');
+                 if (firstActiveButton) {
+                     // Trigger click to set initial state correctly, including animations
+                     firstActiveButton.click();
+                 } else if (tabButtons.length > 0) {
+                     // Activate the first tab if none are marked active
+                     tabButtons[0].click();
+                 }
+            } else {
+                console.warn("Tab buttons or panels not found.");
+            }
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent click from closing immediately if menu is open
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        // Show menu
+                        mobileMenu.classList.remove('hidden');
+                    } else {
+                        // Hide menu
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+                // Close mobile menu when a link inside is clicked
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                         mobileMenu.classList.add('hidden');
+                    });
+                });
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!mobileMenu.contains(e.target) && e.target !== mobileMenuButton && !mobileMenuButton.contains(e.target)) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            } else {
+                console.warn("Mobile menu button or menu element not found.");
+            }
+
+            // --- Intersection Observer for Scroll Animations ---
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add 'is-visible' class to trigger CSS animation/transition
+                        entry.target.classList.add('is-visible');
+
+                        // Apply staggered delay for elements observed together (like game cards)
+                        // Check if the element already has an inline style delay (from tabs)
+                        if (!entry.target.style.animationDelay) {
+                            // Check parent or siblings for context if needed, or apply simple delay
+                             const delay = (entry.target.dataset.delayIndex || index) * 100; // Use data attribute or index
+                             entry.target.style.animationDelay = `${delay}ms`;
+                             // Add animation class if it uses keyframes directly
+                             if (entry.target.classList.contains('animate-fade-in-up')) {
+                                 // Already handled by the tab logic or CSS directly
+                             }
+                        }
+
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            // Observe elements with .observe-animate AND .animate-fade-in-up (outside tabs)
+            const elementsToAnimate = document.querySelectorAll('.observe-animate, .animate-fade-in-up:not(.tab-panel .animate-fade-in-up)'); // Exclude tab panel items initially
+             elementsToAnimate.forEach((el, index) => {
+                 el.dataset.delayIndex = index; // Assign index for potential staggering
+                 observer.observe(el);
+             });
+
+            // --- Image Fallback Handling (using onerror attribute in HTML is simpler) ---
+            // Optional: Add logging for failed images
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    // console.warn(`Failed to load image: ${this.src}. Placeholder used.`);
+                    // Add a class to indicate the image failed, if needed for styling
+                    this.classList.add('img-load-error');
+                });
+                 // Add placeholder data attribute for CSS targeting if needed
+                 if (!img.complete || img.naturalWidth === 0) {
+                     img.setAttribute('data-placeholder', 'true');
+                 }
+                 img.onload = () => img.removeAttribute('data-placeholder');
+            });
+
+             // --- Check Hero Background Image (Optional Logging) ---
+             const heroSection = document.querySelector('.hero-bg');
+             if (heroSection) {
+                 const img = new Image();
+                 // Extract URL from computed style more reliably
+                 const bgStyle = window.getComputedStyle(heroSection).backgroundImage;
+                 const urlMatch = bgStyle.match(/url\("?(.+?)"?\)/);
+                 if (urlMatch && urlMatch[1]) {
+                     img.src = urlMatch[1];
+                     img.onerror = () => {
+                         // console.warn(`Hero background image failed to load: ${img.src}. Falling back to background color.`);
+                         heroSection.classList.add('hero-bg-fallback'); // Add class for potential style adjustments
+                     };
+                 } else if (bgStyle !== 'none') {
+                    //   console.warn('Could not parse hero background image URL from CSS:', bgStyle);
+                 }
+             }
+
+        });
+    </script>
+
+</body>
+</html>
